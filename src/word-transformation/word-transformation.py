@@ -5,7 +5,15 @@ def wordTransformation(dictionary, words):
     filteredDictionary = [x for x in dictionary if len(x) == len(words[0])]
 
     def isNeighbour(first, second):
-        return len(set(first) - set(second)) == 1
+        d = 0
+
+        for x, y in zip(first, second):
+            if x != y:
+                d += 1
+            if d > 2:
+                return False
+
+        return d == 1
 
     def getNeighbours(word):
         return [x for x in filteredDictionary if isNeighbour(word, x)]
@@ -15,7 +23,7 @@ def wordTransformation(dictionary, words):
     transformations = 0
     while len(toVisit) > 0:
         wordList = toVisit.popleft()
-        transformations = transformations + 1
+        transformations += 1
 
         nextWordList = []
         for word in wordList:
